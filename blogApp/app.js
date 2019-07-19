@@ -1,3 +1,4 @@
+//blogApp
 var express  = require("express"),
 	mongoose = require("mongoose"),
 	app 	 = express();
@@ -48,8 +49,42 @@ app.get("/blogs", function(req, res){
 	});
 });
 
+//NEW
+app.get("/blogs/new", function(req, res){
+	res.render("new.ejs");
+});
+
 //CREATE
-//create new blog post and redirect to index
+app.post("/blogs", function(req, res){
+	//associate form elements with req data
+	const title = req.body.title;
+	const image = req.body.image;
+	const body = req.body.body;
+	const newCombo = {title: title, image: image, body: body};
+	//create new blog
+	Blog.create(newCombo, function(error, newBlog){
+		console.log(newBlog);
+		if(error){
+			res.render("new.ejs");
+		} else {
+			//redirect defaults to get request
+			res.redirect("/blogs");
+		}
+	});
+});
+
+//SHOW
+app.get("/blogs/:id", function(req, res){
+	Blog.findById(req.params.id, function(error, blogDetail){
+		if(error){
+			console.log(error);
+			res.redirect("/blogs");
+		} else {
+			res.render("show.ejs", {blog: blogDetail});
+		}
+	});
+});
+//initial create new blog post based on schema
 // Blog.create({
 // 	title: "Test Blog",
 // 	image: "https://live.staticflickr.com/5026/5661473686_bde347b63e.jpg",
