@@ -1,23 +1,28 @@
 //blogApp
-var express  = require("express"),
-	mongoose = require("mongoose"),
-	app 	 = express();
+var methodOverride  = require("method-override"),
+	express  		= require("express"),
+	mongoose 		= require("mongoose"),
+	app 	 		= express();
+	
 
-//connect to the db
+//App config
+	//connect to the db
 mongoose.connect("mongodb://localhost:27017/blogApp", { useNewUrlParser: true });
 
-// mongoose depriciation warning workarounds
-//read more @ https://mongoosejs.com/docs/deprecations.html
+	// mongoose depriciation warning workarounds
+	//read more @ https://mongoosejs.com/docs/deprecations.html
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-//utilize built in body parser
+	//utilize built in body parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//allow express to serve files from public folder
+	//allow express to serve files from public folder
 app.use(express.static("public"));
+	//POST parameter; will treat put requests as post request (put is not valid within HTML standard)
+app.use(methodOverride("_method"));
 
 // monoose model config
 var blogSchema = new mongoose.Schema({
@@ -84,6 +89,49 @@ app.get("/blogs/:id", function(req, res){
 		}
 	});
 });
+
+//EDIT
+app.get("/blogs/:id/edit", function(req, res){
+	//like a combo of new and show
+	//first we need to drag the id out of the req, so that we can assign prefilled content and deliver it to tthe coorect blog entry within the db
+	Blog.findById(req.params.id, function(error, blogDetail){
+		if(error){
+			res.redirect("/blogs");
+		} else {
+			res.render("edit.ejs", {blog: blogDetail});
+		}
+	});
+});
+
+//UPDATE
+//takes all form data (after user edits) and passes it through the find&update method. redirecting at blogs/id
+app.put("/blogs/:id", function(req, res){
+	const title = req.body.title;
+	const image = req.body.image;
+	const body = req.body.body;
+	const newCombo = {title: title, image: image, body: body};
+	Blog.findByIdAndUpdate(req.params.id, newCombo, function(error, updatedBlog){
+		if(error){
+			res.redirect("/blogs");
+		} else {
+			res.redirect("/blogs/" + req.params.id);
+		}
+	});
+});
+
+//DELETE
+//delete and redirect
+app.delete("/blogs/:id", function(req, res){
+	Blog.findByIdAndRemove(req.params.id, function(error){
+		if(error){
+			res.redirect("/blogs");
+		} else {
+			res.redirect("/blogs");
+		}
+	});
+});
+
+
 //initial create new blog post based on schema
 // Blog.create({
 // 	title: "Test Blog",
