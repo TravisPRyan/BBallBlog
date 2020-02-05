@@ -1,7 +1,6 @@
 {
   "name": "blogapp",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +13,15 @@
     "express-sanitizer": "^1.0.5",
     "method-override": "^3.0.0",
     "mongoose": "^5.6.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TravisPRyan/BBallBlog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TravisPRyan/BBallBlog/issues"
+  },
+  "homepage": "https://github.com/TravisPRyan/BBallBlog#readme",
+  "description": ""
 }
