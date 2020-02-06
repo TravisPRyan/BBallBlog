@@ -4,6 +4,7 @@ i.icon {
 
 .container.main {
 	margin-top: 7.0em;
+	margin-bottom: 7.0em;
 }
 
 #delete {
@@ -13,8 +14,11 @@ i.icon {
 .main-footer {
   text-align: center;
   padding: 1rem;
-  background: #000;
+  background: #1b1c1d;
   color: #fff;
   height: 60px;
 }
 
+body {
+	background: #000;
+}
