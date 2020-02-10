@@ -1,2 +1,2 @@
 # BBallBBQ
-Increase your BBQ-IQ and Knicks Basketball knowledge with BBALLBBQ – the blog for modern travelers.  
+Increase your BBQ-IQ and Knicks Basketball knowledge with BBallBBQ – the modern blog for discerning travelers.  
