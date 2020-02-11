@@ -5,13 +5,12 @@ const methodOverride   = require("method-override"),
 	  mongoose 		   = require("mongoose"),
 	  app 	 		   = express(),
 	  port             = process.env.PORT || 3000;
+	  
 	
 
 //App config
-	//connect to the db
-mongoose.connect("mongodb://localhost:27017/blogApp", { useNewUrlParser: true });
-
-// mongodb+srv://GT80:pears@blogapp0-yt2mc.mongodb.net/test?retryWrites=true&w=majority
+	//connect to the test/prod db. DB credentials were changed from previous commit.
+mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true });
 
 	// mongoose depriciation warning workarounds
 	//read more @ https://mongoosejs.com/docs/deprecations.html
